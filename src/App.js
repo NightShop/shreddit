@@ -1,11 +1,10 @@
-import React from "react";
 import { hot } from "react-hot-loader/root";
-import Test from "./Components/Test.js";
+import Test from "./Components/Test";
 
 const App = () => {
     return (
         <div>
-            <h1>Helloooooo</h1>
+            <h1>Hello</h1>
             <Test></Test>
         </div>
     )

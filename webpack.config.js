@@ -1,19 +1,22 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
     mode: "development",
-    entry: "./src/index.js",
+    entry: [
+        "react-hot-loader/patch",
+        "./src/index.js"
+    ],
     devServer: {
         static: "./dist",
-        hot: true,
+        hot: true
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: "Shredditt",
             template: "src/index.html"
         }),
+        "react-hot-loader/babel",
     ],
     module: {
         rules: [
@@ -22,14 +25,16 @@ module.exports = {
                 use: ['style-loader', 'css-loader'],
             },
             {
-                test: /\.m?jsx?$/,
+                test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: "babel-loader",
+                    loaders: ["react-hot-loader/webpack", "babel-loader"],
                     options: {
                         presets: [
+                            ["@babel/preset-react", {
+                                "runtime": "automatic"
+                            }],
                             '@babel/preset-env',
-                            "@babel/preset-react"
                         ]
                     }
                 }
@@ -44,4 +49,7 @@ module.exports = {
         path: path.resolve(__dirname, "dist"),
         clean: true,
     },
+    optimization: {
+        runttimeChunk: "single"
+    }
 };
